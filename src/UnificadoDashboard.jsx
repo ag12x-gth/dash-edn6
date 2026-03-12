@@ -54,11 +54,25 @@ export default function UnificadoDashboard() {
       desafio: row[3] || ""
     }));
 
-    // Processar Compradores
+    // Processar Compradores (Normalizando Faturamento Mensal -> Anual)
+    const normalizeFaturamento = (fatMensal) => {
+      if (!fatMensal || fatMensal === "Não informado") return "Não informado";
+      
+      // Lógica de conversão (Mensal * 12)
+      if (fatMensal === "Até R$ 50.000") return "De R$ 500 mil a R$ 1 milhão"; // ~600k
+      if (fatMensal === "De R$ 50.000 - R$ 100.000") return "De R$ 500 mil a R$ 1 milhão"; // ~600k a 1.2M
+      if (fatMensal === "De R$ 100.000 - R$ 300.000") return "De R$ 1 milhão a R$ 2 milhões"; // ~1.2M a 3.6M
+      if (fatMensal === "De R$ 300.000 - R$ 500.000") return "De R$ 2 milhões a R$ 5 milhões"; // ~3.6M a 6M
+      if (fatMensal === "De R$ 500.000 - R$ 1.000.000") return "De R$ 5 milhões a R$ 10 milhões"; // ~6M a 12M
+      if (fatMensal === "Acima de R$ 1.000.000") return "Acima de R$ 10 milhões"; // >12M
+      
+      return "Não informado";
+    };
+
     const compradores = COMPRADORES_RAW.map(row => ({
       origem: "Comprador",
       ramo: row[6] || "Outros",
-      faturamento: row[8] || "Não informado",
+      faturamento: normalizeFaturamento(row[8]),
       desafio: row[13] || ""
     }));
 
