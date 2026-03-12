@@ -516,15 +516,15 @@ export default function Dashboard() {
       `}</style>
 
       {/* HEADER */}
-      <div style={{ background:"linear-gradient(90deg,#0C0A06,#1A1208,#0C0A06)", borderBottom:`1px solid ${BORDER}`, padding:"18px 36px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 }}>
-        <div style={{ display:"flex", alignItems:"center", gap:14 }}>
-          <div style={{ width:38, height:38, background:`linear-gradient(135deg,${GOLD},#7A5010)`, borderRadius:9, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, boxShadow:`0 0 18px ${GOLD}40` }}>◆</div>
+      <div className="header-container">
+        <div className="header-left">
+          <div className="logo-icon" style={{ width:38, height:38, background:`linear-gradient(135deg,${GOLD},#7A5010)`, borderRadius:9, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, boxShadow:`0 0 18px ${GOLD}40` }}>◆</div>
           <div>
-            <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:800, color:GOLD2, letterSpacing:"-0.02em" }}>ENCONTRO DE NEGÓCIOS</div>
-            <div style={{ fontSize:10, color:"#5A4020", letterSpacing:".12em", textTransform:"uppercase" }}>Dashboard Executivo · Antônio Fogaça & Pablo Marçal</div>
+            <div className="title" style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:800, color:GOLD2, letterSpacing:"-0.02em" }}>ENCONTRO DE NEGÓCIOS</div>
+            <div className="subtitle" style={{ fontSize:10, color:"#5A4020", letterSpacing:".12em", textTransform:"uppercase" }}>Dashboard Executivo · Antônio Fogaça & Pablo Marçal</div>
           </div>
         </div>
-        <div style={{ display:"flex", gap:8 }}>
+        <div className="header-tabs">
           {["overview","faturamento","setores","dores","timeline"].map(t => (
             <button key={t} className="tab" onClick={() => setTab(t)} style={{
               background: tab===t ? `linear-gradient(135deg,${GOLD},#8B6014)` : "transparent",
@@ -535,8 +535,8 @@ export default function Dashboard() {
             </button>
           ))}
         </div>
-        <div style={{ textAlign:"right", display:"flex", flexDirection:"column", alignItems:"flex-end", gap:4 }}>
-          <div style={{ display:"flex", gap:8 }}>
+        <div className="header-right">
+          <div className="nav-links">
             <a href="/dash-edn6/compradores.html" style={{ fontSize:11, color:"#8B7050", textDecoration:"none", border:`1px solid ${BORDER}`, padding:"4px 8px", borderRadius:4 }}>Compradores</a>
             <a href="/dash-edn6/unificado.html" style={{ fontSize:11, color:"#8B7050", textDecoration:"none", border:`1px solid ${BORDER}`, padding:"4px 8px", borderRadius:4 }}>Unificado</a>
           </div>
@@ -545,10 +545,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div style={{ padding:"28px 36px", maxWidth:1360, margin:"0 auto" }}>
+      <div className="main-container">
 
         {/* NICHO BANNER */}
-        <div style={{
+        <div className="nicho-banner" style={{
           background:"linear-gradient(135deg,#191208,#231A0A)", border:`1px solid #3A2A0A`,
           borderRadius:18, padding:"24px 32px", marginBottom:24, display:"flex", alignItems:"center", justifyContent:"space-between", position:"relative", overflow:"hidden",
         }}>
@@ -563,13 +563,13 @@ export default function Dashboard() {
               Pré-qualificação de participantes do <strong style={{color:GOLD2}}>Encontro de Negócios com Antônio Fogaça e Pablo Marçal</strong> — empresários e empreendedores em busca de escala, networking e aceleração de resultados
             </div>
           </div>
-          <div style={{ display:"flex", gap:12, flexShrink:0 }}>
+          <div className="nicho-stats" style={{ display:"flex", gap:12, flexShrink:0 }}>
             {[
               { label:"Total inscritos", val: d.total, icon:"👥" },
               { label:"Faturamento médio", val: fmt(d.avgRevenue * 1000), icon:"📊" },
               { label:"Nicho dominante", val: topSector?.name, icon:"🏆" },
             ].map((item,i) => (
-              <div key={i} style={{ background:"#0C0A0680", border:`1px solid ${BORDER}`, borderRadius:12, padding:"16px 20px", textAlign:"center", minWidth:130 }}>
+              <div key={i} className="nicho-stat-item" style={{ background:"#0C0A0680", border:`1px solid ${BORDER}`, borderRadius:12, padding:"16px 20px", textAlign:"center", minWidth:130 }}>
                 <div style={{ fontSize:20 }}>{item.icon}</div>
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:22, color:GOLD, fontWeight:700, marginTop:4 }}>{item.val}</div>
                 <div style={{ fontSize:10, color:"#5A4020", letterSpacing:".08em", marginTop:2 }}>{item.label}</div>
@@ -582,13 +582,13 @@ export default function Dashboard() {
         {tab === "overview" && (
           <>
             {/* KPI CARDS */}
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:22 }}>
+            <div className="kpi-grid">
               <KPI icon="👥" label="Inscritos Confirmados" value={<AnimNum target={d.total} />} sub={`Em ${[...new Set(RAW.map(r=>r[0]))].length} dias de captação`} delay={0} />
               <KPI icon="💰" label="Faturamento Médio" value={fmt(d.avgRevenue*1000)} sub="Estimado por faixa declarada" delay={100} accent={GOLD2} />
               <KPI icon="🏗️" label="Setor Dominante" value={topSector?.name} sub={`${topSector?.value} inscritos (${Math.round(topSector?.value/d.total*100)}%)`} delay={200} />
               <KPI icon="🔥" label="Principal Dor" value={topPain?.name.split(" ")[0]} sub={`${topPain?.count} relatos — ${topPain?.name}`} delay={300} accent="#E87050" />
             </div>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:22 }}>
+            <div className="kpi-grid">
               <KPI icon="🎯" label="Micro Empresas (≤300K)" value={`${pctSmall}%`} sub={`${d.revData[0]?.count} participantes`} delay={100} accent="#F5C040" />
               <KPI icon="🦁" label="Grandes Empresas (10M+)" value={`${d.bigPlayers.length}`} sub="Acima de R$ 10 milhões" delay={200} accent={GOLD2} />
               <KPI icon="🤝" label="Via Mentorado" value={`${d.inviteData.find(i=>i.name==="Mentorado")?.value || 0}`} sub="Principal canal de captação" delay={300} />
@@ -596,47 +596,51 @@ export default function Dashboard() {
             </div>
 
             {/* CHARTS ROW */}
-            <div style={{ display:"grid", gridTemplateColumns:"1.4fr 1fr", gap:18, marginBottom:18 }}>
+            <div className="chart-grid">
               {/* Revenue bar */}
-              <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"22px 24px" }}>
+              <div className="chart-card">
                 <div style={{ marginBottom:16 }}>
                   <div style={{ fontSize:10, color:"#5A4020", letterSpacing:".12em", textTransform:"uppercase", marginBottom:3 }}>Distribuição de Faturamento</div>
                   <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:GOLD }}>Volume por Faixa de Receita</div>
                 </div>
-                <ResponsiveContainer width="100%" height={220}>
-                  <BarChart data={d.revData} layout="vertical">
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1A150A" horizontal={false}/>
-                    <XAxis type="number" tick={{fill:"#5A4020",fontSize:10}} axisLine={false} tickLine={false}/>
-                    <YAxis dataKey="faixa" type="category" tick={{fill:"#8B7050",fontSize:10}} width={100} axisLine={false} tickLine={false}/>
-                    <Tooltip content={<CustomTooltip/>}/>
-                    <Bar dataKey="count" name="Inscritos" radius={[0,4,4,0]}>
-                      {d.revData.map((_,i) => <Cell key={i} fill={i===0?"#8B6018":GOLD} fillOpacity={i===0?0.7:0.9}/>)}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+                <div className="chart-wrapper">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={d.revData} layout="vertical">
+                      <CartesianGrid strokeDasharray="3 3" stroke="#1A150A" horizontal={false}/>
+                      <XAxis type="number" tick={{fill:"#5A4020",fontSize:10}} axisLine={false} tickLine={false}/>
+                      <YAxis dataKey="faixa" type="category" tick={{fill:"#8B7050",fontSize:10}} width={100} axisLine={false} tickLine={false}/>
+                      <Tooltip content={<CustomTooltip/>}/>
+                      <Bar dataKey="count" name="Inscritos" radius={[0,4,4,0]}>
+                        {d.revData.map((_,i) => <Cell key={i} fill={i===0?"#8B6018":GOLD} fillOpacity={i===0?0.7:0.9}/>)}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
 
               {/* Sector pie */}
-              <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"22px 24px" }}>
+              <div className="chart-card">
                 <div style={{ marginBottom:12 }}>
                   <div style={{ fontSize:10, color:"#5A4020", letterSpacing:".12em", textTransform:"uppercase", marginBottom:3 }}>Segmentação</div>
                   <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:GOLD }}>Setores de Atuação</div>
                 </div>
-                <ResponsiveContainer width="100%" height={200}>
-                  <PieChart>
-                    <Pie data={d.sectorData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} innerRadius={40} paddingAngle={2}>
-                      {d.sectorData.map((_,i) => <Cell key={i} fill={SECTOR_COLORS[i % SECTOR_COLORS.length]}/>)}
-                    </Pie>
-                    <Tooltip contentStyle={{background:"#1A1208",border:`1px solid ${BORDER}`,borderRadius:8,color:GOLD,fontSize:12}}/>
-                    <Legend iconSize={8} wrapperStyle={{fontSize:10,color:"#8B7050"}}/>
-                  </PieChart>
-                </ResponsiveContainer>
+                <div className="chart-wrapper">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie data={d.sectorData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} innerRadius={40} paddingAngle={2}>
+                        {d.sectorData.map((_,i) => <Cell key={i} fill={SECTOR_COLORS[i % SECTOR_COLORS.length]}/>)}
+                      </Pie>
+                      <Tooltip contentStyle={{background:"#1A1208",border:`1px solid ${BORDER}`,borderRadius:8,color:GOLD,fontSize:12}}/>
+                      <Legend iconSize={8} wrapperStyle={{fontSize:10,color:"#8B7050"}}/>
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
 
             {/* INVITE TYPE + PAINS */}
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:18 }}>
-              <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"22px 24px" }}>
+            <div className="chart-grid">
+              <div className="chart-card">
                 <div style={{ fontSize:10, color:"#5A4020", letterSpacing:".12em", textTransform:"uppercase", marginBottom:3 }}>Canal de Aquisição</div>
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:GOLD, marginBottom:16 }}>Como Foram Convidados</div>
                 {d.inviteData.map((item,i) => (
@@ -652,7 +656,7 @@ export default function Dashboard() {
                 ))}
               </div>
 
-              <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"22px 24px" }}>
+              <div className="chart-card">
                 <div style={{ fontSize:10, color:"#5A4020", letterSpacing:".12em", textTransform:"uppercase", marginBottom:3 }}>Diagnóstico</div>
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:"#E87060", marginBottom:16 }}>Principais Dores do Negócio</div>
                 {d.painData.map((item,i) => {
@@ -677,28 +681,30 @@ export default function Dashboard() {
         {/* FATURAMENTO TAB */}
         {tab === "faturamento" && (
           <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14 }}>
+            <div className="kpi-grid">
               <KPI icon="📈" label="Faturamento Médio Estimado" value={fmt(d.avgRevenue*1000)} sub="Média ponderada por faixa" delay={0}/>
               <KPI icon="💼" label="Ticket Potencial (10M+)" value={`${d.bigPlayers.length} empresas`} sub="Acima de R$ 10 milhões/ano" delay={100} accent={GOLD2}/>
               <KPI icon="🏢" label="Faixa Mais Comum" value="≤ R$ 300K" sub={`${d.revData[0]?.count} inscritos — ${pctSmall}% do total`} delay={200} accent="#F5C040"/>
             </div>
-            <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"24px 28px" }}>
+            <div className="chart-card">
               <div style={{ fontFamily:"'Playfair Display',serif", fontSize:22, color:GOLD, marginBottom:20 }}>Distribuição Completa por Faixa de Faturamento</div>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={d.revData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1A150A" vertical={false}/>
-                  <XAxis dataKey="faixa" tick={{fill:"#5A4020",fontSize:10}} axisLine={false} tickLine={false}/>
-                  <YAxis tick={{fill:"#5A4020",fontSize:11}} axisLine={false} tickLine={false}/>
-                  <Tooltip content={<CustomTooltip/>}/>
-                  <Bar dataKey="count" name="Inscritos" radius={[5,5,0,0]}>
-                    {d.revData.map((_,i) => <Cell key={i} fill={SECTOR_COLORS[i]}/>)}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="chart-wrapper">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={d.revData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1A150A" vertical={false}/>
+                    <XAxis dataKey="faixa" tick={{fill:"#5A4020",fontSize:10}} axisLine={false} tickLine={false}/>
+                    <YAxis tick={{fill:"#5A4020",fontSize:11}} axisLine={false} tickLine={false}/>
+                    <Tooltip content={<CustomTooltip/>}/>
+                    <Bar dataKey="count" name="Inscritos" radius={[5,5,0,0]}>
+                      {d.revData.map((_,i) => <Cell key={i} fill={SECTOR_COLORS[i]}/>)}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-            <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"24px 28px" }}>
+            <div className="chart-card">
               <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:GOLD, marginBottom:16 }}>Empresas com Faturamento Acima de R$ 10M</div>
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10 }}>
+              <div className="kpi-grid">
                 {d.bigPlayers.map((p,i) => (
                   <div key={i} style={{ background:"#0C0A06", border:`1px solid ${BORDER}`, borderRadius:10, padding:"12px 16px" }}>
                     <div style={{ fontSize:10, color:GOLD, letterSpacing:".08em", textTransform:"uppercase", marginBottom:4 }}>{p[1]}</div>
@@ -714,8 +720,8 @@ export default function Dashboard() {
         {/* SETORES TAB */}
         {tab === "setores" && (
           <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
-            <div style={{ display:"grid", gridTemplateColumns:"1.4fr 1fr", gap:18 }}>
-              <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"24px 28px" }}>
+            <div className="chart-grid">
+              <div className="chart-card">
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:22, color:GOLD, marginBottom:20 }}>Ranking de Setores</div>
                 {d.sectorData.map((item,i) => (
                   <div key={i} style={{ marginBottom:14 }}>
@@ -735,16 +741,18 @@ export default function Dashboard() {
                   </div>
                 ))}
               </div>
-              <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"24px 28px" }}>
+              <div className="chart-card">
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:GOLD, marginBottom:12 }}>Setores por Participação</div>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie data={d.sectorData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} innerRadius={50} paddingAngle={2} label={({name,percent}) => `${name} ${(percent*100).toFixed(0)}%`} labelLine={{stroke:"#3A2A0A"}} fontSize={10}>
-                      {d.sectorData.map((_,i) => <Cell key={i} fill={SECTOR_COLORS[i]}/>)}
-                    </Pie>
-                    <Tooltip contentStyle={{background:"#1A1208",border:`1px solid ${BORDER}`,borderRadius:8,color:GOLD,fontSize:12}}/>
-                  </PieChart>
-                </ResponsiveContainer>
+                <div className="chart-wrapper">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie data={d.sectorData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} innerRadius={50} paddingAngle={2} label={({name,percent}) => `${name} ${(percent*100).toFixed(0)}%`} labelLine={{stroke:"#3A2A0A"}} fontSize={10}>
+                        {d.sectorData.map((_,i) => <Cell key={i} fill={SECTOR_COLORS[i]}/>)}
+                      </Pie>
+                      <Tooltip contentStyle={{background:"#1A1208",border:`1px solid ${BORDER}`,borderRadius:8,color:GOLD,fontSize:12}}/>
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
             {/* Insight box */}
@@ -762,21 +770,23 @@ export default function Dashboard() {
         {/* DORES TAB */}
         {tab === "dores" && (
           <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
-            <div style={{ background:CARD, border:"1px solid #3A1A0A", borderRadius:14, padding:"24px 28px" }}>
+            <div className="chart-card">
               <div style={{ fontFamily:"'Playfair Display',serif", fontSize:22, color:"#E87060", marginBottom:20 }}>Mapeamento Completo de Dores</div>
-              <ResponsiveContainer width="100%" height={220}>
-                <BarChart data={d.painData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1A150A" vertical={false}/>
-                  <XAxis dataKey="name" tick={{fill:"#5A4020",fontSize:10}} axisLine={false} tickLine={false}/>
-                  <YAxis tick={{fill:"#5A4020",fontSize:11}} axisLine={false} tickLine={false}/>
-                  <Tooltip content={<CustomTooltip/>}/>
-                  <Bar dataKey="count" name="Ocorrências" radius={[5,5,0,0]}>
-                    {d.painData.map((_,i) => <Cell key={i} fill={["#F87171","#FBBF24","#C9A84C","#A07038","#8B6018","#6B4810"][i]}/>)}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="chart-wrapper">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={d.painData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1A150A" vertical={false}/>
+                    <XAxis dataKey="name" tick={{fill:"#5A4020",fontSize:10}} axisLine={false} tickLine={false}/>
+                    <YAxis tick={{fill:"#5A4020",fontSize:11}} axisLine={false} tickLine={false}/>
+                    <Tooltip content={<CustomTooltip/>}/>
+                    <Bar dataKey="count" name="Ocorrências" radius={[5,5,0,0]}>
+                      {d.painData.map((_,i) => <Cell key={i} fill={["#F87171","#FBBF24","#C9A84C","#A07038","#8B6018","#6B4810"][i]}/>)}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14 }}>
+            <div className="kpi-grid">
               {d.painData.map((p,i) => {
                 const colors = ["#F87171","#FBBF24","#C9A84C","#A07038","#8B6018","#6B4810"];
                 const sev = i===0?"CRÍTICA":i===1?"ALTA":i===2?"ALTA":"MÉDIA";
@@ -807,40 +817,44 @@ export default function Dashboard() {
         {/* TIMELINE TAB */}
         {tab === "timeline" && (
           <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14 }}>
+            <div className="kpi-grid">
               <KPI icon="📅" label="Período de Captação" value="20 dias" sub="18/02/2026 a 11/03/2026" delay={0}/>
               <KPI icon="📈" label="Pico de Inscrições" value="11/Mar" sub={`${Math.max(...d.timelineData.map(t=>t.novos))} inscrições em 1 dia`} delay={100} accent={GOLD2}/>
               <KPI icon="⚡" label="Média Diária" value={(d.total / d.timelineData.length).toFixed(1)} sub="Inscrições por dia" delay={200}/>
             </div>
-            <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"24px 28px" }}>
+            <div className="chart-card">
               <div style={{ fontFamily:"'Playfair Display',serif", fontSize:22, color:GOLD, marginBottom:20 }}>Crescimento Acumulado de Inscrições</div>
-              <ResponsiveContainer width="100%" height={260}>
-                <AreaChart data={d.timelineData}>
-                  <defs>
-                    <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={GOLD} stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor={GOLD} stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1A150A"/>
-                  <XAxis dataKey="dia" tick={{fill:"#5A4020",fontSize:9}} axisLine={false} tickLine={false}/>
-                  <YAxis tick={{fill:"#5A4020",fontSize:11}} axisLine={false} tickLine={false}/>
-                  <Tooltip content={<CustomTooltip/>}/>
-                  <Area type="monotone" dataKey="acumulado" name="Total acumulado" stroke={GOLD} strokeWidth={2.5} fill="url(#areaGrad)" dot={false}/>
-                </AreaChart>
-              </ResponsiveContainer>
+              <div className="chart-wrapper">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={d.timelineData}>
+                    <defs>
+                      <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={GOLD} stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor={GOLD} stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1A150A"/>
+                    <XAxis dataKey="dia" tick={{fill:"#5A4020",fontSize:9}} axisLine={false} tickLine={false}/>
+                    <YAxis tick={{fill:"#5A4020",fontSize:11}} axisLine={false} tickLine={false}/>
+                    <Tooltip content={<CustomTooltip/>}/>
+                    <Area type="monotone" dataKey="acumulado" name="Total acumulado" stroke={GOLD} strokeWidth={2.5} fill="url(#areaGrad)" dot={false}/>
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-            <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:"24px 28px" }}>
+            <div className="chart-card">
               <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:GOLD, marginBottom:16 }}>Inscrições por Dia</div>
-              <ResponsiveContainer width="100%" height={180}>
-                <BarChart data={d.timelineData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1A150A" vertical={false}/>
-                  <XAxis dataKey="dia" tick={{fill:"#5A4020",fontSize:9}} axisLine={false} tickLine={false}/>
-                  <YAxis tick={{fill:"#5A4020",fontSize:11}} axisLine={false} tickLine={false}/>
-                  <Tooltip content={<CustomTooltip/>}/>
-                  <Bar dataKey="novos" name="Novos inscritos" fill={GOLD} radius={[4,4,0,0]} opacity={0.85}/>
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="chart-wrapper">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={d.timelineData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1A150A" vertical={false}/>
+                    <XAxis dataKey="dia" tick={{fill:"#5A4020",fontSize:9}} axisLine={false} tickLine={false}/>
+                    <YAxis tick={{fill:"#5A4020",fontSize:11}} axisLine={false} tickLine={false}/>
+                    <Tooltip content={<CustomTooltip/>}/>
+                    <Bar dataKey="novos" name="Novos inscritos" fill={GOLD} radius={[4,4,0,0]} opacity={0.85}/>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         )}

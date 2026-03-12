@@ -171,16 +171,16 @@ export default function UnificadoDashboard() {
       `}</style>
 
       {/* HEADER */}
-      <div style={{ background:"linear-gradient(90deg,#0C0A06,#1A1208,#0C0A06)", borderBottom:`1px solid ${BORDER}`, padding:"18px 36px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100 }}>
-        <div style={{ display:"flex", alignItems:"center", gap:14 }}>
-          <div style={{ width:38, height:38, background:`linear-gradient(135deg,${GOLD},#7A5010)`, borderRadius:9, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, boxShadow:`0 0 18px ${GOLD}40` }}>◆</div>
+      <div className="header-container">
+        <div className="header-left">
+          <div className="logo-icon" style={{ width:38, height:38, background:`linear-gradient(135deg,${GOLD},#7A5010)`, borderRadius:9, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, boxShadow:`0 0 18px ${GOLD}40` }}>◆</div>
           <div>
-            <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:800, color:GOLD2, letterSpacing:"-0.02em" }}>ENCONTRO DE NEGÓCIOS</div>
-            <div style={{ fontSize:10, color:"#5A4020", letterSpacing:".12em", textTransform:"uppercase" }}>Dashboard Unificado (Geral)</div>
+            <div className="title" style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:800, color:GOLD2, letterSpacing:"-0.02em" }}>ENCONTRO DE NEGÓCIOS</div>
+            <div className="subtitle" style={{ fontSize:10, color:"#5A4020", letterSpacing:".12em", textTransform:"uppercase" }}>Dashboard Unificado (Geral)</div>
           </div>
         </div>
-        <div style={{ textAlign:"right", display:"flex", flexDirection:"column", alignItems:"flex-end", gap:4 }}>
-          <div style={{ display:"flex", gap:8 }}>
+        <div className="header-right">
+          <div className="nav-links">
             <a href="/dash-edn6/" style={{ fontSize:11, color:"#8B7050", textDecoration:"none", border:`1px solid ${BORDER}`, padding:"4px 8px", borderRadius:4 }}>Convidados</a>
             <a href="/dash-edn6/compradores.html" style={{ fontSize:11, color:"#8B7050", textDecoration:"none", border:`1px solid ${BORDER}`, padding:"4px 8px", borderRadius:4 }}>Compradores</a>
           </div>
@@ -189,9 +189,9 @@ export default function UnificadoDashboard() {
         </div>
       </div>
 
-      <div style={{ padding:"28px 36px", maxWidth:1360, margin:"0 auto" }}>
+      <div className="main-container">
         {/* KPIs */}
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(200px, 1fr))", gap:20, marginBottom:32 }}>
+        <div className="kpi-grid">
           <KPI icon="📊" label="Total Geral" value={kpis.total} sub="Participantes totais" delay={100} />
           <KPI icon="🎟️" label="Convidados" value={kpis.totalConvidados} sub={`${Math.round((kpis.totalConvidados/kpis.total)*100)}% do total`} delay={200} accent="#A07838" />
           <KPI icon="💳" label="Compradores" value={kpis.totalCompradores} sub={`${Math.round((kpis.totalCompradores/kpis.total)*100)}% do total`} delay={300} accent="#E8C97A" />
@@ -200,12 +200,12 @@ export default function UnificadoDashboard() {
         </div>
 
         {/* Gráficos */}
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(500px, 1fr))", gap:24, marginBottom:32 }}>
+        <div className="chart-grid">
           
           {/* Distribuição por Origem */}
-          <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:16, padding:24 }}>
+          <div className="chart-card">
             <div style={{ fontSize:14, fontWeight:600, color:GOLD2, letterSpacing:".05em", textTransform:"uppercase", marginBottom:20 }}>Distribuição do Público</div>
-            <div style={{ height:300 }}>
+            <div className="chart-wrapper">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -229,9 +229,9 @@ export default function UnificadoDashboard() {
           </div>
 
           {/* Faturamento Comparativo */}
-          <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:16, padding:24 }}>
+          <div className="chart-card">
             <div style={{ fontSize:14, fontWeight:600, color:GOLD2, letterSpacing:".05em", textTransform:"uppercase", marginBottom:20 }}>Faturamento: Convidados vs Compradores</div>
-            <div style={{ height:300 }}>
+            <div className="chart-wrapper">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData.faturamento} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#2A1F08" />
@@ -247,9 +247,9 @@ export default function UnificadoDashboard() {
           </div>
 
           {/* Ramos Comparativo */}
-          <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:16, padding:24, gridColumn: "1 / -1" }}>
+          <div className="chart-card chart-card-full">
             <div style={{ fontSize:14, fontWeight:600, color:GOLD2, letterSpacing:".05em", textTransform:"uppercase", marginBottom:20 }}>Top Ramos de Atividade: Convidados vs Compradores</div>
-            <div style={{ height:350 }}>
+            <div className="chart-wrapper-tall">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData.ramos} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#2A1F08" />
