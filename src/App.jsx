@@ -536,8 +536,11 @@ export default function Dashboard() {
           ))}
         </div>
         <div style={{ textAlign:"right", display:"flex", flexDirection:"column", alignItems:"flex-end", gap:4 }}>
-          <a href="/dash-edn6/compradores.html" style={{ fontSize:11, color:GOLD, textDecoration:"none", border:`1px solid ${GOLD}`, padding:"4px 8px", borderRadius:4 }}>Ver Compradores</a>
-          <div style={{ fontSize:11, color:"#5A4020" }}>{new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"})}</div>
+          <div style={{ display:"flex", gap:8 }}>
+            <a href="/dash-edn6/compradores.html" style={{ fontSize:11, color:"#8B7050", textDecoration:"none", border:`1px solid ${BORDER}`, padding:"4px 8px", borderRadius:4 }}>Compradores</a>
+            <a href="/dash-edn6/unificado.html" style={{ fontSize:11, color:"#8B7050", textDecoration:"none", border:`1px solid ${BORDER}`, padding:"4px 8px", borderRadius:4 }}>Unificado</a>
+          </div>
+          <div style={{ fontSize:11, color:"#5A4020", marginTop:4 }}>{new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"})}</div>
           <div style={{ fontSize:9, color:"#3A2A10", letterSpacing:".1em" }}>CONFIDENCIAL</div>
         </div>
       </div>

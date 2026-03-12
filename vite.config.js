@@ -13,7 +13,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        compradores: resolve(__dirname, 'compradores.html')
+        compradores: resolve(__dirname, 'compradores.html'),
+        unificado: resolve(__dirname, 'unificado.html')
       }
     }
   }
