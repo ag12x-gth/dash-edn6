@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, Legend
@@ -462,7 +462,7 @@ function AnimNum({ target, prefix="", suffix="", duration=1200 }) {
       if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
-  }, [target]);
+  }, [target, duration]);
   return <span>{prefix}{val.toLocaleString("pt-BR")}{suffix}</span>;
 }
 
@@ -503,7 +503,7 @@ export default function Dashboard() {
 
   const topSector = d.sectorData[0];
   const topPain = d.painData[0];
-  const topInvite = d.inviteData[0];
+  const _topInvite = d.inviteData[0];
   const pctSmall = d.revData[0] ? Math.round((d.revData[0].count / d.total) * 100) : 0;
 
   return (
@@ -535,7 +535,8 @@ export default function Dashboard() {
             </button>
           ))}
         </div>
-        <div style={{ textAlign:"right" }}>
+        <div style={{ textAlign:"right", display:"flex", flexDirection:"column", alignItems:"flex-end", gap:4 }}>
+          <a href="/dash-edn6/compradores.html" style={{ fontSize:11, color:GOLD, textDecoration:"none", border:`1px solid ${GOLD}`, padding:"4px 8px", borderRadius:4 }}>Ver Compradores</a>
           <div style={{ fontSize:11, color:"#5A4020" }}>{new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"})}</div>
           <div style={{ fontSize:9, color:"#3A2A10", letterSpacing:".1em" }}>CONFIDENCIAL</div>
         </div>
